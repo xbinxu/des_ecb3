@@ -8,6 +8,7 @@ defmodule PKCS7 do
     rem_size = rem(size, 8)
 
     case bin do 
+      << data :: binary-size(size) >> when rem_size == 0 -> data
       << data :: binary-size(size), 1 >> when rem_size == 7 -> data
       << data :: binary-size(size), 2, 2 >> when rem_size == 6 -> data
       << data :: binary-size(size), 3, 3, 3 >> when rem_size == 5 -> data
