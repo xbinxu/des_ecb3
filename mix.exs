@@ -27,17 +27,17 @@ defmodule Mix.Tasks.Compile.Desecb3 do
   end
 
   defp nocompiler_error("nmake") do
-    raise Mix.Error, message: nocompiler_message("nmake") <> windows_message
+    raise Mix.Error, message: nocompiler_message("nmake") <> windows_message()
   end
   defp nocompiler_error(exec) do
-    raise Mix.Error, message: nocompiler_message(exec) <> nix_message
+    raise Mix.Error, message: nocompiler_message(exec) <> nix_message()
   end
 
   defp build_error("nmake") do
-    raise Mix.Error, message: build_message <> windows_message
+    raise Mix.Error, message: build_message <> windows_message()
   end
   defp build_error(_) do
-    raise Mix.Error, message: build_message <> nix_message
+    raise Mix.Error, message: build_message <> nix_message()
   end
 
   defp nocompiler_message(exec) do
@@ -50,7 +50,7 @@ defmodule Mix.Tasks.Compile.Desecb3 do
     """
   end
 
-  defp build_message do
+  defp build_message() do
     """
     Could not compile Desecb3.
 
@@ -60,7 +60,7 @@ defmodule Mix.Tasks.Compile.Desecb3 do
     """
   end
 
-  defp windows_message do
+  defp windows_message() do
     """
     One option is to install a recent version of Visual Studio (the
     free Community edition will be enough for this task). Then try running
@@ -73,7 +73,7 @@ defmodule Mix.Tasks.Compile.Desecb3 do
     """
   end
 
-  defp nix_message do
+  defp nix_message() do
     """
     Please follow the directions below for the operating system you are
     using:
@@ -101,14 +101,14 @@ defmodule DesEcb3.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      compilers: [:desecb3, :elixir, :app],
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
   #
   # Type `mix help compile.app` for more information
-  def application do
-    [applications: [:logger]]
+  def application() do
+    [extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -120,7 +120,7 @@ defmodule DesEcb3.Mixfile do
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
   # Type `mix help deps` for more examples and options
-  defp deps do
+  defp deps() do
     []
   end
 
