@@ -5,6 +5,7 @@ defmodule DesEcb3 do
   @on_load :load_nif
   @nif_file '#{:code.priv_dir(:des_ecb3)}/des_ecb3'
 
+  @spec load_nif :: :ok | {:error, any}
   def load_nif do
     case :erlang.load_nif(@nif_file, 0) do
       :ok -> :ok
@@ -13,16 +14,20 @@ defmodule DesEcb3 do
     end
   end
 
+  @spec nif_decrypt(binary, binary) :: binary
   def nif_decrypt(key, cipher_text)
-  def nif_decrypt(_, _), do: exit(:nif_library_not_loaded)
+  def nif_decrypt(_, _), do: :erlang.nif_error(:nif_not_loaded)
 
+  @spec nif_encrypt(binary, binary) :: binary
   def nif_encrypt(key, plain_text)
-  def nif_encrypt(_, _), do: exit(:nif_library_not_loaded)
+  def nif_encrypt(_, _), do: :erlang.nif_error(:nif_not_loaded)
 
+  @spec encrypt(binary, binary) :: binary
   def encrypt(key, plain_text) do
     nif_encrypt(key, plain_text |> PKCS7.pad())
   end
 
+  @spec decrypt(binary, binary) :: binary
   def decrypt(key, cipher_text) do
     nif_decrypt(key, cipher_text) |> PKCS7.unpad()
   end
