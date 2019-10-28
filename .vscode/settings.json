@@ -1,0 +1,50 @@
+{
+  "files.exclude": {
+    "c_src/*.d": true,
+    "c_src/*.o": true,
+    "ebin": true,
+    ".eunit": true,
+    ".elixir_ls": true,
+    "priv": true,
+    "_build": true
+  },
+  "elixirLS.mixEnv": "dev",
+  "elixirLS.suggestSpecs": false,
+
+  "clang.executable": "/usr/bin/clang",
+
+  "clang.completion.enable": true,
+
+  "clang.cxxflags": [
+      "-std=c++11",
+      "-I/usr/local/Cellar/erlang/22.1/lib/erlang/usr/include"
+  ],
+
+  "clang.cflags": [
+      "-std=c99",
+      "-Ic:/usr/local/Cellar/erlang/22.1/lib/erlang/usr/include"
+  ],
+
+  "[c]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[cpp]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "files.associations": {
+    "__locale": "c",
+    "set": "cpp",
+    "bitset": "cpp",
+    "__hash": "cpp",
+    "memory": "cpp",
+    "optional": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "system_error": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "vector": "cpp"
+  }
+}

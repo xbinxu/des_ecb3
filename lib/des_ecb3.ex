@@ -1,27 +1,29 @@
 defmodule DesEcb3 do
+  require Logger
 
-  @on_load {:init, 0}
+  @compile {:autoload, false}
+  @on_load :load_nif
+  @nif_file '#{:code.priv_dir(:des_ecb3)}/des_ecb3'
 
-  def init do
-    path = :filename.join(:code.priv_dir(:des_ecb3), 'desecb3_nif')
-    :ok = :erlang.load_nif(path, 0)
+  def load_nif do
+    case :erlang.load_nif(@nif_file, 0) do
+      :ok -> :ok
+      {:error, {:reload, _}} -> :ok
+      {:error, reason} -> Logger.warn("Failed to load nif: #{inspect(reason)}")
+    end
   end
 
-  def block_decrypt(key, cipherText)
-  def block_decrypt(_, _), do: exit(:nif_library_not_loaded)
+  def nif_decrypt(key, cipher_text)
+  def nif_decrypt(_, _), do: exit(:nif_library_not_loaded)
 
-  def block_encrypt(key, plainText)
-  def block_encrypt(_, _), do: exit(:nif_library_not_loaded)
+  def nif_encrypt(key, plain_text)
+  def nif_encrypt(_, _), do: exit(:nif_library_not_loaded)
 
-  def decrypt(key, cipherText) do 
-    decrypt_block(key, cipherText, <<>>) |> PKCS7.unpad
+  def encrypt(key, plain_text) do
+    nif_encrypt(key, plain_text |> PKCS7.pad())
   end
 
-  defp decrypt_block(key, <<>>, result), do: result
-
-  defp decrypt_block(key, << block :: binary-size(8), rest :: binary>>, result) do 
-    plain_block = block_decrypt(key, block)
-    decrypt_block(key, rest, << result :: binary, plain_block :: binary >>)
+  def decrypt(key, cipher_text) do
+    nif_decrypt(key, cipher_text) |> PKCS7.unpad()
   end
-
 end
