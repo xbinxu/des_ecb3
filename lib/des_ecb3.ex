@@ -3,11 +3,10 @@ defmodule DesEcb3 do
 
   @compile {:autoload, false}
   @on_load :load_nif
-  @nif_file '#{:code.priv_dir(:des_ecb3)}/des_ecb3'
 
   @spec load_nif :: :ok | {:error, any}
   def load_nif do
-    case :erlang.load_nif(@nif_file, 0) do
+    case :erlang.load_nif('#{:code.priv_dir(:des_ecb3)}/des_ecb3', 0) do
       :ok -> :ok
       {:error, {:reload, _}} -> :ok
       {:error, reason} -> Logger.warn("Failed to load nif: #{inspect(reason)}")

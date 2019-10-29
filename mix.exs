@@ -4,7 +4,7 @@ defmodule DesEcb3.MixProject do
   def project do
     [
       app: :des_ecb3,
-      version: "0.2.1",
+      version: "0.2.2",
       elixir: "~> 1.6",
       build_embedded: Mix.env() not in [:dev, :test],
       start_permanent: Mix.env() not in [:dev, :test],
